@@ -1,3 +1,4 @@
 node_modules
+.env
 padrao-documentacao-obsidian.md
 .codex

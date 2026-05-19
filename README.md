@@ -366,8 +366,9 @@ Antes do Compose, é possível subir um banco isolado com `docker run`:
 ```bash
 docker run \
   --name db-postgres \
-  -e POSTGRES_USER=postgres \
-  -e POSTGRES_PASSWORD=postgres \
+  -e POSTGRESQL_USERNAME=postgres \
+  -e POSTGRESQL_PASSWORD=postgres \
+  -e POSTGRESQL_POSTGRES_PASSWORD=postgres \
   -p 5432:5432 \
   -d bitnami/postgresql:latest
 ```
@@ -440,15 +441,27 @@ services:
     ports:
       - "5432:5432"
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=api
+      - POSTGRESQL_USERNAME=${POSTGRESQL_USERNAME}
+      - POSTGRESQL_PASSWORD=${POSTGRESQL_PASSWORD}
+      - POSTGRESQL_POSTGRES_PASSWORD=${POSTGRESQL_POSTGRES_PASSWORD}
+      - POSTGRESQL_DATABASE=${POSTGRESQL_DATABASE}
     volumes:
       - database_data:/bitnami/postgresql
 
 volumes:
   database_data:
 ```
+
+O Compose lê automaticamente o arquivo `.env` na raiz do projeto. Crie um com base no `.env.example`:
+
+```env
+POSTGRESQL_USERNAME=postgres
+POSTGRESQL_PASSWORD=postgres
+POSTGRESQL_POSTGRES_PASSWORD=postgres
+POSTGRESQL_DATABASE=api
+```
+
+> Nunca commite o `.env` — ele já está no `.gitignore`. Use `.env.example` para documentar as variáveis necessárias.
 
 **Pontos importantes:**
 - `version` foi removido — o Docker ignora essa linha atualmente e avisa que está obsoleta
