@@ -16,6 +16,15 @@ docker build -t api:latest .
 docker run -p 3333:3333 api:latest
 ```
 
+Docker Compose (full stack):
+```bash
+docker compose up -d          # starts api + postgres
+docker compose up postgres -d # starts only postgres
+docker compose down           # stops and removes containers
+```
+
+Requires a `.env` file at the project root (see `.env.example`).
+
 No test or lint scripts are configured.
 
 ## Architecture
